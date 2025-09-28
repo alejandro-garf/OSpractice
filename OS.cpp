@@ -23,3 +23,11 @@ int main(){
 
 
     // Configure its size
+    ftruncate(shm_fd, SIZE);
+
+    // Map to memmory 
+    void* ptr = mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
+    if (ptr == MAP_FAILED){
+        std::cerr << "Error mapping memory\n";
+        return 1;
+    }
