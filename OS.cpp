@@ -31,3 +31,12 @@ int main(){
         std::cerr << "Error mapping memory\n";
         return 1;
     }
+
+    // Write Message
+    const char* msg = "Hello World";
+    strcpy((char*)ptr, msg);
+
+    std::cout << "Producer Wrote: " << msg << std::endl;
+
+    return 0;
+}
