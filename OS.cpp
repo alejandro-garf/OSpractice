@@ -6,23 +6,20 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <cstring>
+#include <iostream>
 
 
-#define BUFFER_SIZE 10
+int main(){
+    const char* name = "/OS";
+    const int SIZE = 4096;
 
-typedef struct 
-{
-    int buffer[BUFFER_SIZE];
-    int in;
-    int out;
-} shared_data;
+    // create the shared memory object
+    int shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+    if (shm_fd == -1){
+        std::cerr << "Error creating shared memory\n";
+        return 1;
+    }
 
-int main()
-{
-    int fd = shm_open("/my_shm", O_CREAT | O_RDWR, 0666);
-    ftruncate(fd, sizeof(shared_data));
-    shared_data *data = (shared_data*) mmap(0, sizeof(shared_data),
-                          PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-    
 
-}
+    // Configure its size
