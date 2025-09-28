@@ -20,4 +20,11 @@ int main(){
         std::cerr << "Error creating openining memory\n";
         return 1;
     }
+
+    // map to memeory
+    void* ptr = mmap(0, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+    if (ptr == MAP_FAILED){
+        std::cerr << "Error mapping memory\n";
+        return 1;
+    }
 }
