@@ -27,4 +27,12 @@ int main(){
         std::cerr << "Error mapping memory\n";
         return 1;
     }
+
+    // consumer read the message
+    std::cout << "Consumer read: " << (char*)ptr << std::endl;
+
+    //Remove the share memory object
+    shm_unlink(name);
+
+    return 0;
 }
