@@ -41,9 +41,28 @@ int main()
     std::strncpy((char*)ptr, message, SIZE);
 
     std::cout << "The message has been written into the shared memory\n";
+    
 
+    //Receiver
+    int fd1 = shm_open(name, O_RDONLY, 0); //open it 
+    if (fd1 == -1)
+    {
+        perror("opening for reading failed");
+        exit(1);
+    }
 
+    //map it
+    void* ptr1 = mmap(0, SIZE, PROT_READ, MAP_SHARED, fd1, 0);
+    if (ptr1 == MAP_FAILED)
+    {
+        perror("Mapping has failed");
+        exit(1);
+    } 
 
+    std::cout << "The receiver message is: " << (char*)ptr1 << std::endl;
+
+    munmap(ptr1, SIZE);
+    close(fd1);
     munmap(ptr, SIZE);
     close(fd);
     shm_unlink(name);
